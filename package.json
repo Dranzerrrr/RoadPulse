@@ -1,0 +1,26 @@
+{
+  "name": "roadpulse-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "RoadPulse — Smart Road-Monitoring Camera Network Monorepo",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "npm run serve:landing",
+    "serve:landing": "npx --yes serve apps/landing -p 3000",
+    "lint": "npx --yes eslint \"apps/**/*.js\" \"packages/**/*.js\"",
+    "lint:fix": "npx --yes eslint \"apps/**/*.js\" \"packages/**/*.js\" --fix",
+    "format": "npx --yes prettier --write \"apps/**/*.{html,css,js}\" \"packages/**/*.{json,css,js}\" \"docs/**/*.md\" \"*.{md,json}\"",
+    "format:check": "npx --yes prettier --check \"apps/**/*.{html,css,js}\" \"packages/**/*.{json,css,js}\" \"docs/**/*.md\" \"*.{md,json}\"",
+    "validate": "node scripts/validate-html.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
