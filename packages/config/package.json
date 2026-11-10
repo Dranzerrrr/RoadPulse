@@ -1,0 +1,10 @@
+{
+  "name": "@roadpulse/config",
+  "version": "0.1.0",
+  "description": "Environment, feature flags, and pilot service abstraction for RoadPulse",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "pilot-service.js"
+  ]
+}
