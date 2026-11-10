@@ -1,0 +1,380 @@
+/**
+ * RoadPulse Cockpit Window, Radar Simulation & HUD Styles
+ */
+
+/* ==========================================================================
+   COCKPIT MAIN WINDOW CONTAINER
+   ========================================================================== */
+.cockpit-window-wrapper {
+  position: relative;
+  max-width: 1140px;
+  margin: 0 auto;
+  z-index: 10;
+}
+
+.cockpit-window {
+  background: rgba(13, 19, 33, 0.85);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.15),
+    0 25px 80px -15px rgba(0, 0, 0, 0.85),
+    0 0 50px rgba(37, 99, 235, 0.15);
+  overflow: hidden;
+  text-align: left;
+}
+
+/* Window Titlebar */
+.cockpit-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.window-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.win-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+
+.win-dot.red { background: #FF5F56; }
+.win-dot.yellow { background: #FFBD2E; }
+.win-dot.green { background: #27C93F; }
+
+.window-breadcrumb {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-sim {
+  background: rgba(42, 217, 198, 0.12);
+  color: var(--brand-teal);
+  border: 1px solid rgba(42, 217, 198, 0.3);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* Tab Switcher Bar */
+.cockpit-tabs-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: rgba(10, 15, 28, 0.6);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.cockpit-tabs-group {
+  display: flex;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+.cockpit-tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cockpit-tab-btn:hover {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cockpit-tab-btn.active {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.cockpit-tab-btn.active svg {
+  stroke: var(--brand-teal);
+}
+
+.cockpit-quick-metrics {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.cockpit-quick-metrics span strong {
+  color: #FFFFFF;
+}
+
+/* Cockpit Body */
+.cockpit-body {
+  padding: 20px;
+  min-height: 460px;
+  background: #080C15;
+}
+
+/* ==========================================================================
+   VIEW 1: RADAR GRID LAYOUT
+   ========================================================================== */
+.radar-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 20px;
+  height: 100%;
+}
+
+.radar-canvas-panel {
+  background: #050811;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radar-svg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+}
+
+.radar-sweep-beam {
+  transform-origin: 50% 50%;
+  animation: radarRotate 6s linear infinite;
+}
+
+@keyframes radarRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.radar-sidebar-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cockpit-card {
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.incident-list-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.incident-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.incident-item:hover, .incident-item.selected {
+  background: rgba(42, 217, 198, 0.08);
+  border-color: var(--brand-teal);
+}
+
+.badge-status {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.badge-critical {
+  background: var(--severity-critical-bg);
+  color: var(--severity-critical);
+  border: 1px solid var(--severity-critical-border);
+}
+
+.badge-severe {
+  background: var(--severity-severe-bg);
+  color: var(--severity-severe);
+  border: 1px solid var(--severity-severe-border);
+}
+
+.badge-verified {
+  background: var(--severity-verified-bg);
+  color: var(--severity-verified);
+  border: 1px solid var(--severity-verified-border);
+}
+
+/* ==========================================================================
+   VIEW 2: DUAL OPTICAL STREAM VIEW
+   ========================================================================== */
+.optical-stream-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.stream-feed-card {
+  background: #050811;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.stream-header {
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+}
+
+.stream-viewport {
+  position: relative;
+  height: 280px;
+  background: #020408;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.stream-canvas-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.stream-meta-footer {
+  padding: 12px 14px;
+  background: rgba(15, 23, 42, 0.4);
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ==========================================================================
+   VIEW 3: DRIVER HUD VIEW
+   ========================================================================== */
+.hud-simulator-layout {
+  position: relative;
+  height: 380px;
+  background: linear-gradient(180deg, #02050E 0%, #061021 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
+}
+
+.hud-windshield-projection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  z-index: 5;
+  text-align: center;
+  max-width: 520px;
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(249, 115, 22, 0.4);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 0 40px rgba(249, 115, 22, 0.25), inset 0 0 15px rgba(249, 115, 22, 0.15);
+}
+
+.hud-distance-readout {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #FF7A45;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-shadow: 0 0 25px rgba(255, 122, 69, 0.5);
+}
+
+/* ==========================================================================
+   TIMELINE SCRUBBER BAR
+   ========================================================================== */
+.cockpit-timeline-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: rgba(10, 15, 26, 0.9);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.timeline-track-wrapper {
+  flex: 1;
+  margin: 0 24px;
+  position: relative;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.timeline-progress-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 68%;
+  background: linear-gradient(90deg, #2563EB 0%, #2AD9C6 50%, #F97316 100%);
+  border-radius: var(--radius-full);
+}
+
+/* Cockpit Breakpoint Adjustments */
+@media (max-width: 1024px) {
+  .radar-grid-layout {
+    grid-template-columns: 1fr;
+  }
+  .optical-stream-layout {
+    grid-template-columns: 1fr;
+  }
+}
