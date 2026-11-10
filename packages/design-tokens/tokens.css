@@ -1,0 +1,62 @@
+/**
+ * RoadPulse Design Tokens
+ * Screen Studio / Apple Pro Dark Obsidian Aesthetic
+ */
+:root {
+  /* Surfaces & Backgrounds */
+  --bg-deep: #030712;
+  --bg-surface: #0a0f1d;
+  --bg-elevated: #111827;
+  
+  --card-bg: rgba(15, 23, 42, 0.72);
+  --card-bg-hover: rgba(22, 33, 58, 0.85);
+  --card-inner: rgba(10, 15, 29, 0.8);
+  
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.16);
+  --border-highlight: rgba(255, 255, 255, 0.25);
+  
+  /* Brand Palette */
+  --brand-teal: #2AD9C6;
+  --brand-teal-glow: rgba(42, 217, 198, 0.35);
+  --brand-blue: #2563eb;
+  --brand-blue-glow: rgba(37, 99, 235, 0.45);
+  --brand-orange: #f97316;
+  --brand-orange-glow: rgba(249, 115, 22, 0.45);
+  --brand-amber: #fbbf24;
+  --brand-red: #ef4444;
+  --brand-green: #10b981;
+
+  /* Severity Indicator Colors */
+  --severity-critical: #EF4444;
+  --severity-critical-bg: rgba(239, 68, 68, 0.2);
+  --severity-critical-border: rgba(239, 68, 68, 0.3);
+
+  --severity-severe: #F59E0B;
+  --severity-severe-bg: rgba(245, 158, 11, 0.2);
+  --severity-severe-border: rgba(245, 158, 11, 0.3);
+
+  --severity-moderate: #3B82F6;
+  --severity-moderate-bg: rgba(59, 130, 246, 0.2);
+  --severity-moderate-border: rgba(59, 130, 246, 0.3);
+
+  --severity-verified: #10B981;
+  --severity-verified-bg: rgba(16, 185, 129, 0.2);
+  --severity-verified-border: rgba(16, 185, 129, 0.3);
+
+  /* Typography Colors */
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+  
+  /* Motion & Animation */
+  --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}

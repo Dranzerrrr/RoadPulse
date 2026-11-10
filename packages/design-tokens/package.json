@@ -1,0 +1,11 @@
+{
+  "name": "@roadpulse/design-tokens",
+  "version": "0.1.0",
+  "description": "Centralized design tokens and CSS custom properties for RoadPulse",
+  "main": "tokens.json",
+  "style": "tokens.css",
+  "files": [
+    "tokens.css",
+    "tokens.json"
+  ]
+}
