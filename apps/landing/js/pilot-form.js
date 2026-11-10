@@ -5,8 +5,8 @@
 
 // Runtime Supabase Configuration (Optional - populates when credentials are set)
 export const CONFIG = {
-  supabaseUrl: '',
-  supabaseAnonKey: ''
+  supabaseUrl: 'https://pbgohgbzsmgtezhqcbqi.supabase.co',
+  supabaseAnonKey: 'sb_publishable_1QQRR73ZEc1fHgN7cd-EDw_yc29DJ_V'
 };
 
 export async function handlePilotSubmit(e) {
