@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Radial Gradient -->
+    <radialGradient id="bgGlow" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#141E2B"/>
+      <stop offset="100%" stop-color="#070A0E"/>
+    </radialGradient>
+
+    <!-- Signal Teal Linear Gradient -->
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3AE4D2"/>
+      <stop offset="100%" stop-color="#14B8A6"/>
+    </linearGradient>
+
+    <!-- Road Perspective Gradient -->
+    <linearGradient id="roadGrad" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#2AD9C6" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#0B1320" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Canvas Background Tile -->
+  <rect width="512" height="512" rx="108" fill="url(#bgGlow)"/>
+  <rect width="512" height="512" rx="108" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3"/>
+
+  <!-- Converging Highway Road Perspective -->
+  <path d="M 180 440 L 235 250 L 277 250 L 332 440 Z" fill="url(#roadGrad)"/>
+  <line x1="256" y1="250" x2="256" y2="440" stroke="#2AD9C6" stroke-width="8" stroke-dasharray="24 16"/>
+
+  <!-- Radiating Pulse Rings -->
+  <circle cx="256" cy="190" r="140" fill="none" stroke="#2AD9C6" stroke-width="2.5" stroke-dasharray="10 10" opacity="0.3"/>
+  <circle cx="256" cy="190" r="105" fill="none" stroke="#2AD9C6" stroke-width="3" stroke-dasharray="8 8" opacity="0.5"/>
+
+  <!-- Outer Camera Lens Ring -->
+  <circle cx="256" cy="190" r="75" fill="#0C131D" stroke="url(#tealGrad)" stroke-width="12"/>
+
+  <!-- Hexagonal Camera Aperture Iris -->
+  <polygon points="256,132 306,161 306,219 256,248 206,219 206,161" fill="#162334" stroke="#2AD9C6" stroke-width="7"/>
+
+  <!-- Inner Pupil Sensor Node -->
+  <circle cx="256" cy="190" r="24" fill="url(#tealGrad)"/>
+  <circle cx="248" cy="182" r="7" fill="#FFFFFF" opacity="0.9"/>
+</svg>
+
