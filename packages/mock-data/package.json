@@ -1,0 +1,10 @@
+{
+  "name": "@roadpulse/mock-data",
+  "version": "0.1.0",
+  "description": "Canonical simulated road hazard telemetry for RoadPulse monorepo",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "incidents.json"
+  ]
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "INC-102",
+    "type": "accident",
+    "road": "NH-16",
+    "severity": "Critical",
+    "title": "Km 418.2 Multi-Car Collision",
+    "location": "Vijayawada-Guntur Express Link",
+    "detected_at": "2026-11-10T09:02:08Z",
+    "source": "multi_sensor_consensus",
+    "status": "Verified",
+    "lat": 16.5062,
+    "lng": 80.6480,
+    "corroboration": "3 Independent Feeds",
+    "verified": true
+  },
+  {
+    "id": "HAZ-204",
+    "type": "pothole",
+    "road": "NH-16",
+    "severity": "High",
+    "title": "Km 414.8 Pothole Depression",
+    "location": "Mangalagiri Junction Overpass",
+    "detected_at": "2026-11-10T09:14:32Z",
+    "source": "solar_mast_optical",
+    "status": "Unverified",
+    "lat": 16.4300,
+    "lng": 80.5600,
+    "corroboration": "2 Independent Feeds",
+    "verified": false
+  },
+  {
+    "id": "DEB-108",
+    "type": "debris",
+    "road": "NH-16",
+    "severity": "Medium",
+    "title": "Km 422.0 Fallen Cargo Obstacle",
+    "location": "Amaravati Seed Access Road",
+    "detected_at": "2026-11-10T09:21:45Z",
+    "source": "dashcam_crowdsource",
+    "status": "Unverified",
+    "lat": 16.5130,
+    "lng": 80.5180,
+    "corroboration": "2 Independent Feeds",
+    "verified": false
+  },
+  {
+    "id": "HAZ-305",
+    "type": "pothole",
+    "road": "NH-65",
+    "severity": "High",
+    "title": "Km 88.5 Deep Surface Cavity",
+    "location": "Ibrahimpatnam Bypass",
+    "detected_at": "2026-11-10T08:45:10Z",
+    "source": "multi_sensor_consensus",
+    "status": "Verified",
+    "lat": 16.5870,
+    "lng": 80.5210,
+    "corroboration": "4 Independent Feeds",
+    "verified": true
+  }
+]
