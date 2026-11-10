@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RoadPulse — Smart Road-Monitoring Concept (Simulation)</title>
+  <meta name="description" content="RoadPulse is a student venture prototype for a camera-based road hazard detection network. Dashboards, alerts, and telemetry on this page are simulated.">
+  
+  <!-- Open Graph / Meta -->
+  <meta property="og:title" content="RoadPulse — Smart Road-Monitoring Concept (Simulation)">
+  <meta property="og:description" content="Student venture prototype: camera-based highway hazard network simulation. No live cameras or emergency services are connected.">
+  <meta property="og:type" content="website">
+
+  <!-- SVG Favicon Data URI -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><circle cx='20' cy='14' r='10' stroke='%232AD9C6' stroke-width='2.5' fill='none'/><polygon points='20,7 26,10.5 26,17.5 20,21 14,17.5 14,10.5' fill='%232AD9C6' opacity='0.3'/><circle cx='20' cy='14' r='3.5' fill='%232AD9C6'/><path d='M14 36L18 20L22 20L26 36H14Z' fill='%232AD9C6' opacity='0.5'/></svg>">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/cockpit.css">
+</head>
+<body>
+
+  <!-- Ambient Background Blueprint Grid -->
+  <div class="bg-grid-ambient" aria-hidden="true"></div>
+
+  <!-- Mandatory Transparency & Venture Concept Status Bar -->
+  <aside class="transparency-bar" role="banner" aria-label="Project Status Notice">
+    <strong>CONCEPT PROTOTYPE</strong> • Dashboards, incidents and alerts on this page are simulated. No live cameras or emergency services are connected.
+    <button type="button" id="btnOpenLegalModal">Validation Methodology</button>
+  </aside>
+
+  <!-- ==========================================================================
+       NAVIGATION BAR
+       ========================================================================== -->
+  <header class="navbar" role="navigation" aria-label="Main Navigation">
+    <div class="container nav-inner">
+      <a href="#hero" class="brand-logo" aria-label="RoadPulse Home">
+        <div class="brand-icon">
+          <!-- RoadPulse Lens & Highway Symbol -->
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2AD9C6" stroke-width="2" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" stroke-opacity="0.4"/>
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M7 21L11 12H13L17 21" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="brand-title">Road<span>Pulse</span></div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#cockpit">Simulator</a></li>
+        <li><a href="#hardware">M1 Mast</a></li>
+        <li><a href="#cabin-hud">Cabin HUD</a></li>
+        <li><a href="#consensus">Consensus</a></li>
+        <li><a href="#calculator">Calculator</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="nav-status-chip">
+          <span class="dot" aria-hidden="true"></span>
+          <span>CONCEPT SIMULATION</span>
+        </div>
+        <button class="btn btn-secondary btn-sm" id="btnNavChime" type="button" title="Test warning audio chime" aria-label="Test warning chime">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          Chime
+        </button>
+        <a href="#pilot" class="btn btn-primary btn-sm">Request Pilot</a>
+        <button class="nav-mobile-toggle" id="btnNavMobileToggle" type="button" aria-label="Toggle navigation menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Slide-down Drawer -->
+    <div class="nav-mobile-menu" id="navMobileMenu">
+      <a href="#cockpit">Simulator</a>
+      <a href="#hardware">M1 Mast</a>
+      <a href="#cabin-hud">Cabin HUD</a>
+      <a href="#consensus">Consensus</a>
+      <a href="#calculator">Calculator</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <div style="display:flex; gap:10px; margin-top:8px;">
+        <button class="btn btn-secondary btn-sm" style="flex:1;" id="btnMobileChime" type="button">Audio Chime</button>
+        <a href="#pilot" class="btn btn-primary btn-sm" style="flex:1;">Request Pilot</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==========================================================================
+         HERO SECTION WITH DUAL-TONE ATMOSPHERIC LIGHTING
+         ========================================================================== -->
+    <section class="hero-section" id="hero">
+      <!-- Cinematic Dual Glow: Cobalt Blue (Left) + Ember Orange (Right) -->
+      <div class="hero-dual-glow" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="pill-badge">
+          <span class="indicator-dot" aria-hidden="true"></span>
+          <span>DUAL-MODULE HIGHWAY VISION • CONCEPT PROTOTYPE</span>
+        </div>
+
+        <h1 class="hero-headline">
+          <span class="text-gradient">Every Highway Has a Pulse.</span><br>
+          We Detect It in Real Time.
+        </h1>
+
+        <p class="hero-subtext">
+          RoadPulse explores combining roadside solar cameras with in-cabin vehicle telemetry to detect potholes and accidents — targeting a sub-90s verified alert window and using multi-camera spatial consensus to filter out false alarms.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#cockpit" class="btn btn-primary">
+            <span>Explore Cockpit Simulation</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#pilot" class="btn btn-secondary">
+            <span>Request Corridor Pilot</span>
+          </a>
+        </div>
+
+        <!-- ==========================================================================
+             HERO MAIN COCKPIT WINDOW (Screen Studio Master Mockup)
+             ========================================================================== -->
+        <div class="cockpit-window-wrapper" id="cockpit">
+          <div class="cockpit-window">
+            
+            <!-- Window Titlebar -->
+            <div class="cockpit-titlebar">
+              <div class="window-controls" aria-hidden="true">
+                <span class="win-dot red"></span>
+                <span class="win-dot yellow"></span>
+                <span class="win-dot green"></span>
+              </div>
+              <div class="window-breadcrumb">
+                <span>RoadPulse Corridor OS</span>
+                <span aria-hidden="true">/</span>
+                <span class="mono" style="color:#FFF;">Simulated Corridor (NH-16 Concept Study)</span>
+                <span class="badge-sim">SIMULATION TESTBED</span>
+              </div>
+              <div class="mono" style="font-size:0.75rem; color:var(--text-dim);" id="clockDisplay" aria-live="off">
+                14:32:08 IST
+              </div>
+            </div>
+
+            <!-- Tab Switcher Bar -->
+            <div class="cockpit-tabs-bar">
+              <div class="cockpit-tabs-group" role="tablist" aria-label="Cockpit Views">
+                <button class="cockpit-tab-btn active" id="btnTabRadar" type="button" role="tab" aria-selected="true" aria-controls="cockpitRadarView">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 10 10"/><path d="M12 12L19 5"/></svg>
+                  Corridor GIS Radar
+                </button>
+                <button class="cockpit-tab-btn" id="btnTabOptical" type="button" role="tab" aria-selected="false" aria-controls="cockpitOpticalView">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                  Dual Optical Stream & Consensus
+                </button>
+                <button class="cockpit-tab-btn" id="btnTabHud" type="button" role="tab" aria-selected="false" aria-controls="cockpitHudView">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                  In-Cabin Driver HUD (80 km/h)
+                </button>
+              </div>
+
+              <div class="cockpit-quick-metrics">
+                <span>Simulated Masts: <strong class="mono" style="color:var(--brand-teal);">10 Units</strong></span>
+                <span>Active Corroboration: <strong class="mono" style="color:#FFFFFF;" id="activeIncidentsNum">03</strong></span>
+                <span>Verified: <strong class="mono" style="color:var(--brand-green);" id="verifiedCount">01</strong></span>
+              </div>
+            </div>
+
+            <!-- Cockpit Body -->
+            <div class="cockpit-body">
+
+              <!-- VIEW 1: CORRIDOR GIS RADAR -->
+              <div id="cockpitRadarView" class="radar-grid-layout" role="tabpanel" aria-labelledby="btnTabRadar">
+                <div class="radar-canvas-panel">
+                  <svg class="radar-svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-label="Simulated Highway Corridor Radar Display">
+                    <defs>
+                      <radialGradient id="radarSweepGrad" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#2AD9C6" stop-opacity="0.3"/>
+                        <stop offset="100%" stop-color="#2AD9C6" stop-opacity="0"/>
+                      </radialGradient>
+                    </defs>
+
+                    <!-- Radar concentric rings -->
+                    <circle cx="300" cy="200" r="160" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+                    <circle cx="300" cy="200" r="110" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                    <circle cx="300" cy="200" r="60" fill="none" stroke="rgba(42,217,198,0.15)" stroke-width="1" stroke-dasharray="3 3"/>
+                    <line x1="300" y1="20" x2="300" y2="380" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                    <line x1="120" y1="200" x2="480" y2="200" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+
+                    <!-- Highway Corridor NH-16 Curve -->
+                    <path d="M 50 320 Q 250 260 300 200 T 550 80" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M 50 320 Q 250 260 300 200 T 550 80" fill="none" stroke="#2AD9C6" stroke-width="2" stroke-dasharray="6 6"/>
+
+                    <!-- Rotating Radar Sweep Beam -->
+                    <g class="radar-sweep-beam">
+                      <path d="M 300 200 L 460 200 A 160 160 0 0 1 430 310 Z" fill="url(#radarSweepGrad)"/>
+                    </g>
+
+                    <!-- Fixed Solar Mast Nodes (Every 5 km) -->
+                    <g transform="translate(180, 248)">
+                      <circle cx="0" cy="0" r="6" fill="#2AD9C6" opacity="0.9"/>
+                      <circle cx="0" cy="0" r="14" fill="none" stroke="#2AD9C6" stroke-width="1" opacity="0.4"/>
+                      <text x="10" y="4" fill="#94A3B8" font-size="10" font-family="'JetBrains Mono'">MAST-01 (Km 410)</text>
+                    </g>
+                    <g transform="translate(300, 200)">
+                      <circle cx="0" cy="0" r="6" fill="#2AD9C6" opacity="0.9"/>
+                      <circle cx="0" cy="0" r="14" fill="none" stroke="#2AD9C6" stroke-width="1" opacity="0.4"/>
+                      <text x="10" y="4" fill="#94A3B8" font-size="10" font-family="'JetBrains Mono'">MAST-02 (Km 415)</text>
+                    </g>
+                    <g transform="translate(430, 135)">
+                      <circle cx="0" cy="0" r="6" fill="#2AD9C6" opacity="0.9"/>
+                      <circle cx="0" cy="0" r="14" fill="none" stroke="#2AD9C6" stroke-width="1" opacity="0.4"/>
+                      <text x="10" y="4" fill="#94A3B8" font-size="10" font-family="'JetBrains Mono'">MAST-03 (Km 420)</text>
+                    </g>
+
+                    <!-- Active Incident Pin: Collision at Km 418.2 -->
+                    <g transform="translate(385, 155)">
+                      <circle cx="0" cy="0" r="10" fill="#EF4444" opacity="0.3">
+                        <animate attributeName="r" values="8;22;8" dur="1.8s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0.6;0.1;0.6" dur="1.8s" repeatCount="indefinite"/>
+                      </circle>
+                      <circle cx="0" cy="0" r="6" fill="#EF4444"/>
+                      <text x="-40" y="-14" fill="#EF4444" font-weight="700" font-size="11" font-family="'JetBrains Mono'">INC-102: COLLISION</text>
+                    </g>
+
+                    <!-- Moving Vehicle Pings (Dashcam nodes) -->
+                    <circle cx="220" cy="235" r="3.5" fill="#FFFFFF">
+                      <animate attributeName="cx" values="180;320" dur="8s" repeatCount="indefinite"/>
+                      <animate attributeName="cy" values="248;190" dur="8s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="340" cy="180" r="3.5" fill="#FFFFFF">
+                      <animate attributeName="cx" values="320;450" dur="8s" repeatCount="indefinite"/>
+                      <animate attributeName="cy" values="190;125" dur="8s" repeatCount="indefinite"/>
+                    </circle>
+                  </svg>
+
+                  <div style="position:absolute; bottom:14px; left:16px; font-size:0.75rem; color:var(--text-dim);" class="mono">
+                    CORRIDOR LAT: 16.5062°N • LON: 80.6480°E • ELEV: 24m
+                  </div>
+                </div>
+
+                <!-- Radar Incident Sidebar -->
+                <div class="radar-sidebar-panel">
+                  <div class="cockpit-card">
+                    <div style="font-size:0.78rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; margin-bottom:10px; display:flex; justify-content:space-between;">
+                      <span>Corroboration Queue</span>
+                      <span class="mono" style="color:var(--brand-teal);">3 In Pipeline</span>
+                    </div>
+                    <div class="incident-list-box" id="cockpitIncidentList" role="list">
+                      <!-- Dynamically populated via cockpit.js -->
+                    </div>
+                  </div>
+
+                  <div class="cockpit-card" id="incidentDetailPanel">
+                    <div style="font-size:0.75rem; color:var(--text-dim); text-transform:uppercase; margin-bottom:6px;" class="mono">
+                      Selected Node Telemetry
+                    </div>
+                    <div style="font-size:0.95rem; font-weight:700; color:#FFFFFF; margin-bottom:6px;" id="insTitle">
+                      Km 418.2 Multi-Car Collision
+                    </div>
+                    <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px;" class="mono" id="insGps">
+                      GPS: 16.5062° N, 80.6480° E • NH-16
+                    </div>
+                    
+                    <div style="display:flex; justify-content:space-between; font-size:0.78rem; padding:8px 0; border-top:1px solid var(--border-subtle); border-bottom:1px solid var(--border-subtle); margin-bottom:14px;">
+                      <span style="color:var(--text-dim);">Corroboration State:</span>
+                      <span class="mono" style="color:var(--brand-teal); font-weight:600;" id="insCorroboration">2+ Independent Feeds</span>
+                    </div>
+
+                    <button class="btn btn-secondary btn-sm" style="width:100%;" id="btnVerifyAction" type="button">
+                      Mark as Verified in Simulation ✓
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- VIEW 2: DUAL OPTICAL STREAM & CONSENSUS -->
+              <div id="cockpitOpticalView" class="optical-stream-layout" style="display:none;" role="tabpanel" aria-labelledby="btnTabOptical">
+                <!-- Left Feed: Mast Camera M1-04 -->
+                <div class="stream-feed-card">
+                  <div class="stream-header">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <span style="width:8px; height:8px; border-radius:50%; background:#EF4444;" aria-hidden="true"></span>
+                      <span class="mono" style="color:#FFF; font-weight:600;">FEED A: M1-04 SOLAR MAST</span>
+                    </div>
+                    <span class="badge-status badge-verified">4.5M ELEVATION</span>
+                  </div>
+                  <div class="stream-viewport">
+                    <svg class="stream-canvas-svg" viewBox="0 0 400 240" aria-label="Roadside Camera Optical View">
+                      <rect width="400" height="240" fill="#070C16"/>
+                      <polygon points="120,240 180,90 220,90 280,240" fill="#111827"/>
+                      <line x1="200" y1="90" x2="200" y2="240" stroke="#F59E0B" stroke-width="2" stroke-dasharray="10 8"/>
+                      
+                      <!-- Detected Pothole Bounding Box from Mast perspective -->
+                      <g id="optFilterBoxes">
+                        <rect x="175" y="150" width="55" height="26" fill="rgba(245, 158, 11, 0.15)" stroke="#F59E0B" stroke-width="1.5"/>
+                        <rect x="175" y="136" width="75" height="14" fill="#F59E0B"/>
+                        <text x="178" y="146" fill="#000" font-size="9" font-weight="700" font-family="'JetBrains Mono'">POTHOLE (CANDIDATE)</text>
+                      </g>
+                    </svg>
+                    <div style="position:absolute; top:12px; left:12px; font-size:0.7rem; color:rgba(255,255,255,0.6);" class="mono">
+                      FPS: 30 • RES: 1080p • INFERENCE: 18ms
+                    </div>
+                  </div>
+                  <div class="stream-meta-footer">
+                    <span>Edge Bounding: <strong style="color:#FFF;">X:175 Y:150 W:55 H:26</strong></span>
+                    <span class="mono">STATUS: CANDIDATE HAZARD</span>
+                  </div>
+                </div>
+
+                <!-- Right Feed: Vehicle Dashcam D1-18 -->
+                <div class="stream-feed-card">
+                  <div class="stream-header">
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <span style="width:8px; height:8px; border-radius:50%; background:#2AD9C6;" aria-hidden="true"></span>
+                      <span class="mono" style="color:#FFF; font-weight:600;">FEED B: CABIN DASHCAM D1-18</span>
+                    </div>
+                    <span class="badge-status badge-verified">82 KM/H MOVING</span>
+                  </div>
+                  <div class="stream-viewport">
+                    <svg class="stream-canvas-svg" viewBox="0 0 400 240" aria-label="Vehicle Dashcam Optical View">
+                      <rect width="400" height="240" fill="#0A0E1A"/>
+                      <polygon points="40,240 160,80 240,80 360,240" fill="#131D2E"/>
+                      <line x1="200" y1="80" x2="200" y2="240" stroke="#FFFFFF" stroke-width="1.5" stroke-dasharray="8 8"/>
+                      
+                      <!-- Detected Obstacle from Moving Vehicle Angle -->
+                      <rect x="182" y="162" width="48" height="22" fill="rgba(42, 217, 198, 0.2)" stroke="#2AD9C6" stroke-width="1.5"/>
+                      <rect x="182" y="150" width="85" height="14" fill="#2AD9C6"/>
+                      <text x="185" y="160" fill="#000" font-size="9" font-weight="700" font-family="'JetBrains Mono'">CORROBORATED (TARGET)</text>
+                    </svg>
+                    <div style="position:absolute; top:12px; left:12px; font-size:0.7rem; color:rgba(255,255,255,0.6);" class="mono">
+                      CAN BUS: SPEED 82 km/h • Z-ACCEL: -1.8G
+                    </div>
+                  </div>
+                  <div class="stream-meta-footer">
+                    <span>Spatial Alignment: <strong style="color:var(--brand-teal);">± 0.8m (SIMULATED CONSENSUS)</strong></span>
+                    <span class="mono" style="color:var(--brand-green);">CONSENSUS ACHIEVED</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- VIEW 3: IN-CABIN DRIVER HUD (Physics Calibrated at 80 km/h) -->
+              <div id="cockpitHudView" class="hud-simulator-layout" style="display:none;" role="tabpanel" aria-labelledby="btnTabHud">
+                <div class="hud-windshield-projection">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="width:10px; height:10px; border-radius:50%; background:#F97316; box-shadow:0 0 10px #F97316;" aria-hidden="true"></span>
+                    <span class="mono" style="font-size:0.82rem; font-weight:700; color:#F97316; letter-spacing:0.08em;">
+                      HAZARD ALERT • 80 KM/H CRUISE
+                    </span>
+                  </div>
+
+                  <div class="hud-distance-readout" id="hudDistance" aria-live="polite">
+                    300m
+                  </div>
+
+                  <div style="font-size:1.05rem; font-weight:700; color:#FFFFFF;">
+                    DEEP ROAD DEPRESSION DETECTED IN LANE 2
+                  </div>
+
+                  <div style="display:flex; gap:20px; font-size:0.85rem; color:var(--text-muted);" class="mono">
+                    <span>Reaction Window: <strong style="color:#FFF;" id="hudSeconds">13.5s</strong></span>
+                    <span>Recommended: <strong style="color:var(--brand-teal);">50 km/h</strong></span>
+                  </div>
+
+                  <div style="display:flex; gap:12px; margin-top:8px;">
+                    <button class="btn btn-primary btn-sm" id="btnHudCountdown" type="button">
+                      Trigger Realistic 13.5s Countdown
+                    </button>
+                    <button class="btn btn-secondary btn-sm" id="btnHudChime" type="button">
+                      Chime Audio
+                    </button>
+                  </div>
+                </div>
+
+                <div style="position:absolute; bottom:16px; font-size:0.75rem; color:var(--text-dim);" class="mono">
+                  CALIBRATED TO INDIAN HIGHWAY SPEED: 80 KM/H = 22.2 M/S • 300M ADVANCE WARNING
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Cockpit Scrubber / Timeline Bar -->
+            <div class="cockpit-timeline-bar">
+              <div style="display:flex; align-items:center; gap:8px; font-size:0.78rem; color:var(--text-muted);" class="mono">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#2AD9C6" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>SIMULATION REPLAY</span>
+              </div>
+
+              <div class="timeline-track-wrapper" aria-hidden="true">
+                <div class="timeline-progress-fill"></div>
+              </div>
+
+              <div style="display:flex; align-items:center; gap:12px; font-size:0.75rem; color:var(--text-dim);" class="mono">
+                <span>CONSENSUS TARGET: <strong style="color:var(--brand-teal);">&gt;95% FILTERING</strong></span>
+                <span class="badge-status badge-verified">SIMULATED FLOW</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         STATS STRIP / SOURCED BENCHMARKS
+         ========================================================================== -->
+    <section class="stats-strip" aria-label="Highway Ground Truth Data">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number">1.77 Lakh</div>
+            <div class="stat-label">Annual Road Deaths in India (2024)</div>
+            <span class="stat-source">MoRTH 2024 • ~20 Deaths per Hour</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">36.6%</div>
+            <div class="stat-label">Fatalities on National Highways</div>
+            <span class="stat-source">MoRTH 2024 (From 31% of Accidents)</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">+53%</div>
+            <div class="stat-label">Rise in Pothole Deaths (2020–2024)</div>
+            <span class="stat-source">MoRTH 2024 • 1,555 to 2,385 Deaths</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">~₹20,000</div>
+            <div class="stat-label">Estimated Annual Cost per Km</div>
+            <span class="stat-source">Pricing Hypothesis: 1 Mast / 5 km @ ₹1L/yr</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         FEATURE DEEP DIVE 1: ROADSIDE M1 SOLAR MAST
+         ========================================================================== -->
+    <section class="section-padding" id="hardware">
+      <div class="container">
+        <div class="staggered-row">
+          
+          <div class="feature-content">
+            <div class="feature-badge-row">
+              <span class="section-tag">PLANNED REFERENCE DESIGN</span>
+              <span class="feature-mini-pill">TARGET SPECIFICATIONS</span>
+            </div>
+            
+            <h2 class="section-title">
+              Autonomous Roadside Vision: Planned M1 Mast Reference Design.
+            </h2>
+
+            <p class="section-desc">
+              Designed as a planned reference design for highway blackspots and interchanges, the M1 Mast concept outlines a self-contained, solar-powered sensing tower. It explores how edge-vision nodes could operate along highways without extensive trenching or grid power cabling.
+            </p>
+
+            <ul class="feature-bullets">
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>Target Specs: 60W Solar + LiFePO4 Buffer:</strong> Planned design target to maintain uninterrupted edge compute during multi-day monsoon overcast conditions.</span>
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>On-device Edge Neural Vision (Target Architecture):</strong> Designed to filter empty highway frames locally and transmit lightweight incident metadata payloads (&lt; 2 KB JSON).</span>
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>Subscription Scope:</strong> The ₹1,00,000/camera/year authority subscription covers the camera sensor license, cloud dashboard, and verified alert feeds (physical solar mast civil installation is a separate reference design).</span>
+              </li>
+            </ul>
+
+            <div style="margin-top:10px;">
+              <a href="#pilot" class="btn btn-secondary btn-sm">Request Technical Specification Sheet</a>
+            </div>
+          </div>
+
+          <div class="feature-card-frame">
+            <div class="feature-card-inner">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <span class="mono" style="font-size:0.8rem; font-weight:700; color:#FFFFFF;">M1 MAST REFERENCE DESIGN (TARGET SPECS)</span>
+                <span class="badge-status badge-verified">TARGET: IP67</span>
+              </div>
+
+              <!-- SVG Schematic of M1 Mast -->
+              <div style="background:#050811; border-radius:12px; padding:20px; border:1px solid var(--border-subtle); text-align:center;">
+                <svg viewBox="0 0 360 220" style="width:100%; max-height:220px;" aria-label="M1 Mast Schematic Diagram">
+                  <line x1="180" y1="20" x2="180" y2="200" stroke="#475569" stroke-width="6"/>
+                  <line x1="140" y1="200" x2="220" y2="200" stroke="#334155" stroke-width="8" stroke-linecap="round"/>
+                  <polygon points="120,30 240,30 220,50 140,50" fill="#1E3A8A" stroke="#3B82F6" stroke-width="1.5"/>
+                  <line x1="180" y1="70" x2="230" y2="70" stroke="#64748B" stroke-width="4"/>
+                  <rect x="230" y="60" width="34" height="20" rx="4" fill="#0F172A" stroke="#2AD9C6" stroke-width="1.5"/>
+                  <circle cx="256" cy="70" r="5" fill="#2AD9C6"/>
+                  <rect x="155" y="110" width="50" height="60" rx="6" fill="#1E293B" stroke="#64748B" stroke-width="1.5"/>
+                  <circle cx="180" cy="140" r="4" fill="#10B981"/>
+                  <text x="250" y="45" fill="#94A3B8" font-size="10" font-family="'JetBrains Mono'">60W SOLAR ARRAY</text>
+                  <text x="270" y="75" fill="#2AD9C6" font-size="10" font-family="'JetBrains Mono'">EDGE OPTICAL SENSOR</text>
+                  <text x="215" y="145" fill="#94A3B8" font-size="10" font-family="'JetBrains Mono'">LiFePO4 BUFFER + 5G</text>
+                </svg>
+              </div>
+
+              <!-- Telemetry Mini Grid -->
+              <div class="telemetry-readout-grid">
+                <div class="telemetry-box">
+                  <div class="label">Target Solar Array</div>
+                  <div class="val" style="color:var(--brand-amber);">60W Nominal Spec</div>
+                </div>
+                <div class="telemetry-box">
+                  <div class="label">Target Battery Buffer</div>
+                  <div class="val" style="color:var(--brand-green);">72h LiFePO4 Design</div>
+                </div>
+                <div class="telemetry-box">
+                  <div class="label">Optical Enclosure Target</div>
+                  <div class="val" style="color:var(--brand-teal);">Hydrophobic Shroud</div>
+                </div>
+                <div class="telemetry-box">
+                  <div class="label">Uplink Target</div>
+                  <div class="val" style="color:#FFF;">Metadata (&lt;2 KB JSON)</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         FEATURE DEEP DIVE 2: IN-CABIN HUD & FLEET TELEMETRY
+         ========================================================================== -->
+    <section class="section-padding" id="cabin-hud" style="background:rgba(10, 15, 29, 0.4); border-top:1px solid var(--border-subtle); border-bottom:1px solid var(--border-subtle);">
+      <div class="container">
+        <div class="staggered-row reverse">
+          
+          <div class="feature-content">
+            <div class="feature-badge-row">
+              <span class="section-tag">PLANNED VEHICLE MODULE</span>
+              <span class="feature-mini-pill">₹300 / VEHICLE / MO (HYPOTHESIS)</span>
+            </div>
+            
+            <h2 class="section-title">
+              In-Cabin Telemetry & Real-Time Driver HUD Concept.
+            </h2>
+
+            <p class="section-desc">
+              To corroborate roadside alerts and alert drivers before hazards arrive, RoadPulse plans a vehicle module concept: a compact windshield camera paired with a Heads-Up Display (HUD) projection for commercial trucks, express buses, and taxis.
+            </p>
+
+            <ul class="feature-bullets">
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>Advance Audio/Visual Warning (Design Target):</strong> Designed to provide drivers with ~13.5 seconds of reaction window at 80 km/h (300m warning distance), helping avoid emergency swerves.</span>
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>Crowdsourced Road Roughness (Planned IRI Mapping):</strong> Exploring how participating vehicle accelerometers could log road vibration indicators to flag developing potholes.</span>
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>Fleet Safety Hypothesis:</strong> Aimed at reducing wheel rim and suspension damage while improving driver situational awareness on unlit corridors.</span>
+              </li>
+            </ul>
+
+            <div style="margin-top:10px;">
+              <a href="#pricing" class="btn btn-secondary btn-sm">View Fleet Subscription Details</a>
+            </div>
+          </div>
+
+          <div class="feature-card-frame">
+            <div class="feature-card-inner">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <span class="mono" style="font-size:0.8rem; font-weight:700; color:#FFFFFF;">IN-CABIN DRIVER HUD (SIMULATION)</span>
+                <span class="badge-status badge-severe">SIMULATED DISPLAY</span>
+              </div>
+
+              <div style="background:linear-gradient(180deg, #020612 0%, #08152B 100%); border-radius:12px; padding:24px; border:1px solid rgba(249, 115, 22, 0.3); text-align:center;">
+                <div style="font-size:0.75rem; color:#F97316; font-weight:700; letter-spacing:0.1em;" class="mono">
+                  HEADS-UP HAZARD VECTORS
+                </div>
+                <div style="font-size:2.8rem; font-weight:800; color:#FF7A45; margin:10px 0; font-family:'Plus Jakarta Sans';">
+                  300M AHEAD
+                </div>
+                <div style="font-size:0.9rem; color:#FFFFFF; font-weight:600; margin-bottom:14px;">
+                  LANE 2: POTHOLE DEPRESSION (DEPTH 6.2cm)
+                </div>
+                
+                <div style="display:flex; justify-content:center; gap:16px; font-size:0.78rem; color:var(--text-muted);" class="mono">
+                  <span>SPEED: <strong style="color:#FFF;">80 km/h</strong></span>
+                  <span>TIME TO IMPACT: <strong style="color:var(--brand-amber);">13.5s</strong></span>
+                  <span>BRAKING: <strong style="color:var(--brand-teal);">SAFE</strong></span>
+                </div>
+              </div>
+
+              <div class="telemetry-readout-grid">
+                <div class="telemetry-box">
+                  <div class="label">Driver Display Concept</div>
+                  <div class="val" style="color:var(--brand-green);">Direct Line of Sight</div>
+                </div>
+                <div class="telemetry-box">
+                  <div class="label">Fleet Unit Pricing</div>
+                  <div class="val" style="color:var(--brand-teal);">₹300 / mo / vehicle</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         FEATURE DEEP DIVE 3: THE CORROBORATION ENGINE
+         ========================================================================== -->
+    <section class="section-padding" id="consensus">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">MULTI-CAMERA CORROBORATION</span>
+          <h2 class="section-title">Why Single-Camera Vision Fails on Highways — And How Consensus Fixes It.</h2>
+          <p class="section-desc">
+            Single highway cameras produce frequent false positives due to standing water reflections, flyover shadows, and stray trash. RoadPulse is designed around requiring spatial agreement from multiple vantage points before raising an alert.
+          </p>
+        </div>
+
+        <div style="background:rgba(13, 19, 33, 0.75); border:1px solid var(--border-medium); border-radius:var(--radius-xl); padding:40px; backdrop-filter:blur(24px); max-width:1040px; margin:0 auto;">
+          
+          <div style="display:grid; grid-template-columns:1fr auto 1fr; gap:24px; align-items:center;">
+            <!-- Node 1 -->
+            <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-subtle); border-radius:12px; padding:20px; text-align:center;">
+              <div class="section-tag" style="margin-bottom:6px;">INPUT FEED 1</div>
+              <div style="font-size:1.1rem; font-weight:700; color:#FFFFFF; margin-bottom:6px;">Roadside M1 Mast</div>
+              <div style="font-size:0.8rem; color:var(--text-muted);">Stationary 4.5m blackspot view detects anomaly bounding box at Km 418.2.</div>
+              <div style="margin-top:12px;" class="mono">
+                <span class="badge-status badge-severe">ANOMALY CANDIDATE</span>
+              </div>
+            </div>
+
+            <!-- Fusion Arrow -->
+            <div style="display:flex; flex-direction:column; align-items:center; gap:8px;" aria-hidden="true">
+              <span style="font-size:1.8rem; color:var(--brand-teal);">+</span>
+              <span style="font-size:0.75rem; color:var(--text-dim);" class="mono">SPATIAL SYNC ±1.5M</span>
+            </div>
+
+            <!-- Node 2 -->
+            <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-subtle); border-radius:12px; padding:20px; text-align:center;">
+              <div class="section-tag" style="margin-bottom:6px;">INPUT FEED 2</div>
+              <div style="font-size:1.1rem; font-weight:700; color:#FFFFFF; margin-bottom:6px;">Commercial Fleet Dashcam</div>
+              <div style="font-size:0.8rem; color:var(--text-muted);">Moving windshield camera corroborates vertical road dip &amp; coordinates.</div>
+              <div style="margin-top:12px;" class="mono">
+                <span class="badge-status badge-severe">CORROBORATING FEED</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:32px; padding-top:28px; border-top:1px solid var(--border-subtle); text-align:center;">
+            <div style="display:inline-flex; align-items:center; gap:10px; padding:8px 20px; border-radius:var(--radius-full); background:rgba(42, 217, 198, 0.1); border:1px solid rgba(42, 217, 198, 0.3); margin-bottom:14px;">
+              <span style="width:8px; height:8px; border-radius:50%; background:var(--brand-teal);" aria-hidden="true"></span>
+              <span class="mono" style="font-size:0.82rem; font-weight:700; color:var(--brand-teal);">
+                SPATIAL CONSENSUS ENGINE: DESIGN TARGET (&gt;95% FILTERING)
+              </span>
+            </div>
+            <div style="font-size:0.92rem; color:var(--text-muted); max-width:700px; margin:0 auto;">
+              Designed to eliminate single-sensor false dispatches. Once spatial agreement is verified between 2+ independent feeds, the incident payload is structured for emergency dispatchers and logged into highway maintenance queues.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         BENTO GRID: OPERATIONAL CAPABILITIES
+         ========================================================================== -->
+    <section class="section-padding" id="capabilities">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">HIGHWAY OPERATIONS STACK</span>
+          <h2 class="section-title">Built for Authority Engineers & Emergency Responders.</h2>
+          <p class="section-desc">
+            Four planned systems designed to help highway authorities detect hazards earlier and streamline maintenance coordination across state and national corridors.
+          </p>
+        </div>
+
+        <div class="bento-grid">
+          
+          <div class="bento-card span-2">
+            <div>
+              <div class="bento-icon-bubble">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+              </div>
+              <h3 class="bento-title">Corridor GIS Heatmapping &amp; Planned Roughness Index (IRI)</h3>
+              <p class="bento-desc">
+                Explores road surface vibration and optical evaluation to assist periodic manual survey methods. Aims to rank highway sections by vibration indicators to identify road deterioration before tarmac failure occurs.
+              </p>
+            </div>
+            <div style="margin-top:24px; padding:16px; background:#050811; border-radius:10px; border:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
+              <span class="mono" style="font-size:0.75rem; color:var(--text-dim);">ROAD SURFACE MONITORING CONCEPT</span>
+              <span class="badge-status badge-verified">DESIGN GOAL</span>
+            </div>
+          </div>
+
+          <div class="bento-card">
+            <div>
+              <div class="bento-icon-bubble">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              </div>
+              <h3 class="bento-title">Automated Concessionaire Workorders (Proposed Workflow)</h3>
+              <p class="bento-desc">
+                Designed to export geo-tagged incident logs with timestamped photographs and GPS coordinates for maintenance teams.
+              </p>
+            </div>
+            <div style="margin-top:24px;">
+              <span class="mono" style="font-size:0.75rem; color:var(--brand-teal);">Structured Workorder Export</span>
+            </div>
+          </div>
+
+          <div class="bento-card">
+            <div>
+              <div class="bento-icon-bubble">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <h3 class="bento-title">Emergency Dispatch Bridge (Proposed Protocol)</h3>
+              <p class="bento-desc">
+                Designed to format crash location, hazard type, and estimated severity into standardized alert packets for emergency medical services.
+              </p>
+            </div>
+            <div style="margin-top:24px;">
+              <span class="mono" style="font-size:0.75rem; color:#EF4444;">Golden Hour Response Goal</span>
+            </div>
+          </div>
+
+          <div class="bento-card span-2">
+            <div>
+              <div class="bento-icon-bubble">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+              </div>
+              <h3 class="bento-title">Edge Low-Bandwidth Telemetry (Design Target)</h3>
+              <p class="bento-desc">
+                Unlike continuous cloud-stream CCTV systems that strain rural networks, RoadPulse plans edge neural inference at the camera. It is designed to transmit lightweight JSON metadata (&lt; 2 KB) during routine conditions.
+              </p>
+            </div>
+            <div style="margin-top:24px; padding:16px; background:#050811; border-radius:10px; border:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
+              <span class="mono" style="font-size:0.75rem; color:var(--text-dim);">DESIGN TARGET: METADATA FIRST</span>
+              <span class="badge-status badge-verified">LOW BANDWIDTH TARGET</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         CORRIDOR SIZING & INVESTMENT CALCULATOR
+         ========================================================================== -->
+    <section class="section-padding" id="calculator" style="background:rgba(10, 15, 29, 0.4); border-top:1px solid var(--border-subtle); border-bottom:1px solid var(--border-subtle);">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">CORRIDOR SIZING MODEL</span>
+          <h2 class="section-title">Highway Corridor Sizing &amp; Pricing Assumptions.</h2>
+          <p class="section-desc">
+            Explore illustrative corridor sizing. RoadPulse models an assumed spacing of 1 roadside camera every 5 km at an assumed annual subscription of ₹1,00,000 per camera (~₹20,000 per km/year).
+          </p>
+        </div>
+
+        <div class="calc-wrapper">
+          <div class="calc-slider-box">
+            <div class="slider-header">
+              <div>
+                <div style="font-size:1.1rem; font-weight:700; color:#FFFFFF;">Select Corridor Length</div>
+                <div style="font-size:0.85rem; color:var(--text-muted);">Highway Section Length (km)</div>
+              </div>
+              <div class="slider-val-display" id="calcLenText">50 km</div>
+            </div>
+
+            <input type="range" id="rangeLen" min="10" max="200" step="5" value="50" aria-label="Highway corridor length in kilometers">
+            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-dim); margin-top:8px;" class="mono" aria-hidden="true">
+              <span>10 km (Bypass)</span>
+              <span>50 km (Section)</span>
+              <span>100 km</span>
+              <span>200 km (Corridor)</span>
+            </div>
+          </div>
+
+          <div class="calc-results-grid">
+            <div class="calc-result-box">
+              <div class="label">Roadside Camera Units</div>
+              <div class="amount" id="outCameras">10 Units</div>
+              <div style="font-size:0.75rem; color:var(--text-dim); margin-top:6px;" class="mono">units = ceil(km / 5)</div>
+            </div>
+
+            <div class="calc-result-box featured">
+              <div class="label" style="color:var(--brand-teal);">Annual License Cost</div>
+              <div class="amount" style="color:var(--brand-teal);" id="outTotal">₹10.0 Lakhs / yr</div>
+              <div style="font-size:0.75rem; color:var(--brand-teal); margin-top:6px;" class="mono">units × ₹1,00,000 / year</div>
+            </div>
+
+            <div class="calc-result-box">
+              <div class="label">Effective Rate per Km</div>
+              <div class="amount" style="color:#FFFFFF;">~₹20,000</div>
+              <div style="font-size:0.75rem; color:var(--text-dim); margin-top:6px;" class="mono">per km / year (5 km spacing)</div>
+            </div>
+          </div>
+
+          <div class="formula-badge-strip mono">
+            <span>PRICING ASSUMPTIONS: Units = ceil(km / 5) • Annual Cost = Units × ₹1,00,000</span>
+            <span style="color:var(--brand-teal);">HYPOTHESIS FOR AUTHORITY EVALUATION</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         PRICING SECTION
+         ========================================================================== -->
+    <section class="section-padding" id="pricing">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">PROCUREMENT &amp; LICENSING</span>
+          <h2 class="section-title">Simple, Transparent Pricing Hypotheses.</h2>
+          <p class="section-desc">
+            Designed for highway authorities, concessionaires, and commercial fleets with transparent subscription hypotheses formulated for pilot evaluation.
+          </p>
+        </div>
+
+        <div class="pricing-grid">
+          
+          <div class="pricing-card">
+            <div>
+              <div class="plan-header">
+                <div class="plan-name">Corridor Pilot Trial</div>
+                <div style="font-size:0.85rem; color:var(--text-muted);">For highway authorities evaluating blackspot concepts.</div>
+                <div class="plan-price">₹2,50,000</div>
+                <div class="plan-period">6-Month Trial Proposal (Up to 25 km)</div>
+              </div>
+
+              <ul class="plan-features-list">
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Prototype evaluation setup (up to 5 test nodes)</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Authority GIS Cockpit Portal (Simulation Mode)</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Dedicated engineering onboarding support</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Pilot evaluation report &amp; incident logs</span>
+                </li>
+              </ul>
+            </div>
+
+            <a href="#pilot" class="btn btn-secondary" style="width:100%;">Request Pilot Application</a>
+          </div>
+
+          <div class="pricing-card featured">
+            <div class="pricing-pill">AUTHORITY HYPOTHESIS</div>
+
+            <div>
+              <div class="plan-header">
+                <div class="plan-name">Authority Camera License</div>
+                <div style="font-size:0.85rem; color:var(--text-muted);">For road authorities and highway concessionaires.</div>
+                <div class="plan-price" style="color:var(--brand-teal);">₹1,00,000</div>
+                <div class="plan-period">per camera unit / year (~₹20,000/km/yr hypothesis)</div>
+              </div>
+
+              <ul class="plan-features-list">
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Camera license, cloud dashboard &amp; alert feeds</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>1 Camera per 5 km continuous spacing assumption</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Central Multi-Camera Corroboration engine</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Automated concessionaire workorder data export</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Standardized emergency alert data formatting</span>
+                </li>
+              </ul>
+            </div>
+
+            <a href="#pilot" class="btn btn-primary" style="width:100%;">Inquire About Authority Pilot</a>
+          </div>
+
+          <div class="pricing-card">
+            <div>
+              <div class="plan-header">
+                <div class="plan-name">Commercial Fleet HUD</div>
+                <div style="font-size:0.85rem; color:var(--text-muted);">For logistics trucks, private buses, &amp; cab fleets.</div>
+                <div class="plan-price">₹300</div>
+                <div class="plan-period">per vehicle / month (hypothesis)</div>
+              </div>
+
+              <ul class="plan-features-list">
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>In-cabin windshield HUD hazard alerts</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Advance collision &amp; pothole warnings (~13.5s target)</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Crowdsourcing telemetry rebate credit concept</span>
+                </li>
+                <li>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Fleet safety dashboard &amp; telemetry export</span>
+                </li>
+              </ul>
+            </div>
+
+            <a href="#pilot" class="btn btn-secondary" style="width:100%;">Enroll Commercial Fleet</a>
+          </div>
+
+        </div>
+
+        <!-- Comparison Matrix Table -->
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th scope="col">Feature Capability</th>
+                <th scope="col">Corridor Pilot</th>
+                <th scope="col">Authority Camera License</th>
+                <th scope="col">Commercial Fleet HUD</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Target Customer</td>
+                <td>Road Authority / Pilot Stretch</td>
+                <td>NHAI / State PWDs / Concessionaires</td>
+                <td>Logistics &amp; Bus Fleet Operators</td>
+              </tr>
+              <tr>
+                <td>Hardware Covered</td>
+                <td>Prototype test nodes (up to 5)</td>
+                <td>Camera sensor license (civil mast separate)</td>
+                <td>In-Cabin Dashcam &amp; HUD App concept</td>
+              </tr>
+              <tr>
+                <td>Multi-Camera Corroboration</td>
+                <td>Included (Simulation)</td>
+                <td>Full Corridor Consensus Engine</td>
+                <td>Feeds Corroborating Vectors</td>
+              </tr>
+              <tr>
+                <td>Emergency Dispatch Interface</td>
+                <td>Simulated Dispatch</td>
+                <td>Proposed Alert Protocol (Simulated)</td>
+                <td>In-Cabin SOS Alert</td>
+              </tr>
+              <tr>
+                <td>Pricing Hypothesis</td>
+                <td>₹2,50,000 for 6 months</td>
+                <td>₹1,00,000 / camera / yr (~₹20k/km)</td>
+                <td>₹300 / vehicle / month</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         FAQ ACCORDION
+         ========================================================================== -->
+    <section class="section-padding" id="faq" style="background:rgba(10, 15, 29, 0.4); border-top:1px solid var(--border-subtle); border-bottom:1px solid var(--border-subtle);">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">FREQUENTLY ASKED QUESTIONS</span>
+          <h2 class="section-title">Clear Answers to Engineering &amp; Evaluation Inquiries.</h2>
+          <p class="section-desc">
+            Direct responses addressing consensus verification, off-grid power targets, optical maintenance, privacy design, and pilot pathways.
+          </p>
+        </div>
+
+        <div class="faq-container" role="region" aria-label="Frequently Asked Questions Accordion">
+          
+          <div class="faq-item">
+            <button class="faq-header" type="button" aria-expanded="false" aria-controls="faqAnswer1" id="faqQuestion1">
+              <span>How does multi-camera consensus aim to filter false alarms like puddles and shadows?</span>
+              <span class="faq-icon-rotator" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-body" id="faqAnswer1" role="region" aria-labelledby="faqQuestion1">
+              Single-camera computer vision models can mistake rain puddles or shadows for deep potholes. RoadPulse proposes requiring spatial multi-vantage corroboration: a stationary roadside camera and a passing fleet vehicle should both detect consistent 3D geometry and coordinate bounds (within ±1.5m) before an alert is validated. Water reflections lack multi-angle parallax consistency and are filtered out in this consensus model.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-header" type="button" aria-expanded="false" aria-controls="faqAnswer2" id="faqQuestion2">
+              <span>What power architecture is planned for overcast weather or grid absence?</span>
+              <span class="faq-icon-rotator" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-body" id="faqAnswer2" role="region" aria-labelledby="faqQuestion2">
+              In the planned M1 reference design, each mast is envisioned as completely off-grid. The concept targets a 60W monocrystalline solar panel coupled with a Lithium Iron Phosphate (LiFePO4) battery buffer sized for up to 72 hours of autonomy without sunlight. Because the planned edge processor operates in low-power resting mode until motion is detected, standby energy use is minimal.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-header" type="button" aria-expanded="false" aria-controls="faqAnswer3" id="faqQuestion3">
+              <span>How is lens soiling, dust, and highway vibration addressed in the reference design?</span>
+              <span class="faq-icon-rotator" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-body" id="faqAnswer3" role="region" aria-labelledby="faqQuestion3">
+              Highway shoulders experience significant dust and diesel particulate build-up. The planned M1 reference design includes an aerodynamic shroud to divert vehicle turbulence away from the optical port, paired with a hydrophobic lens coating and piezoelectric micro-vibration shedding to prevent dust binding during dry months.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-header" type="button" aria-expanded="false" aria-controls="faqAnswer4" id="faqQuestion4">
+              <span>What privacy protections are planned for camera footage and personal data?</span>
+              <span class="faq-icon-rotator" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-body" id="faqAnswer4" role="region" aria-labelledby="faqQuestion4">
+              RoadPulse is conceived strictly as a road condition and hazard detector, not a surveillance system. The target architecture specifies edge-only inference with planned on-chip irreversible blurring of faces and vehicle license plates before any telemetry is transmitted. Only mathematical coordinate vectors and hazard metadata (&lt; 2 KB JSON payloads) are intended to reach the central server.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-header" type="button" aria-expanded="false" aria-controls="faqAnswer5" id="faqQuestion5">
+              <span>How can authorities or fleet partners participate in prototype evaluation?</span>
+              <span class="faq-icon-rotator" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div class="faq-body" id="faqAnswer5" role="region" aria-labelledby="faqQuestion5">
+              RoadPulse is currently a student venture prototype. Highway authorities and fleet operators can request an engineering pilot demo to evaluate simulated corridor performance, review the consensus architecture, and explore collaborative grant-funded testbeds on identified highway blackspots.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         PILOT REQUEST FORM
+         ========================================================================== -->
+    <section class="section-padding" id="pilot">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">CORRIDOR EVALUATION</span>
+          <h2 class="section-title">Request a Corridor Pilot Evaluation.</h2>
+          <p class="section-desc">
+            Submit your target highway or fleet corridor parameters to request an engineering walkthrough and simulation demonstration.
+          </p>
+        </div>
+
+        <div class="pilot-form-card">
+          <form id="pilotForm">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="pName">Official / Lead Name</label>
+                <input class="form-input" type="text" id="pName" placeholder="e.g. Er. Rajiv Sharma" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pEmail">Official Email</label>
+                <input class="form-input" type="email" id="pEmail" placeholder="e.g. rajiv.sharma@nhai.gov.in" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pOrg">Authority / Concessionaire Organization</label>
+                <input class="form-input" type="text" id="pOrg" placeholder="e.g. NHAI / State PWD / Concessionaire" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pCorridor">Target Highway Stretch &amp; Length</label>
+                <input class="form-input" type="text" id="pCorridor" placeholder="e.g. NH-16 Stretch (45 km)" required>
+              </div>
+              <div class="form-group full">
+                <label class="form-label" for="pNotes">Corridor Blackspots &amp; Evaluation Goals</label>
+                <textarea class="form-input" id="pNotes" rows="3" placeholder="Describe blackspots, monsoon pothole clusters, or emergency dispatch objectives..."></textarea>
+              </div>
+            </div>
+
+            <div style="margin-top:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+              <div style="font-size:0.75rem; color:var(--text-dim);" class="mono">
+                DATA NOTICE: SAVED LOCALLY IN DEMO MODE (OR SUPABASE IF CONFIGURED)
+              </div>
+              <button type="submit" class="btn btn-primary" id="btnSubmitForm">
+                Submit Pilot Inquiry
+              </button>
+            </div>
+
+            <div style="font-size:0.75rem; color:var(--text-muted); margin-top:14px; line-height:1.5;">
+              <strong>Data Handling:</strong> In demo mode, submissions are stored only in your browser's local cache. When configured with Supabase credentials, inquiries are sent over HTTPS and stored securely in a private database strictly for pilot communication by RoadPulse (a student venture project).
+            </div>
+
+            <div class="form-feedback" id="formFeedback" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         PRE-FOOTER CTA SHOWCASE
+         ========================================================================== -->
+    <section class="prefooter-showcase-section" aria-label="Deployment Call to Action">
+      <!-- Atmospheric Dual-Tone Lighting Behind the Bottom Card -->
+      <div class="cta-dual-glow" aria-hidden="true"></div>
+
+      <div class="container" style="position:relative; z-index:10;">
+        <div class="pill-badge">
+          <span class="indicator-dot" aria-hidden="true"></span>
+          <span>DEPLOY NEXT-GEN ROAD VISION</span>
+        </div>
+
+        <h2 style="font-size:clamp(2.2rem, 4.2vw, 3.4rem); max-width:850px; margin:0 auto 18px; letter-spacing:-0.03em;">
+          Pioneer the Self-Monitoring Highway Network.
+        </h2>
+
+        <p style="font-size:1.1rem; color:var(--text-muted); max-width:650px; margin:0 auto 36px;">
+          Join the transition from delayed, reactive pothole patching to continuous, autonomous multi-camera road intelligence.
+        </p>
+
+        <div style="display:flex; justify-content:center; gap:16px; margin-bottom:50px; flex-wrap:wrap;">
+          <a href="#pilot" class="btn btn-primary">
+            <span>Schedule Corridor Trial</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#cockpit" class="btn btn-secondary">
+            <span>Relaunch Cockpit Simulation</span>
+          </a>
+        </div>
+
+        <!-- Floating Mockup Frame in Pre-Footer -->
+        <div class="prefooter-floating-card">
+          <div class="prefooter-mockup-frame">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span style="width:10px; height:10px; border-radius:50%; background:var(--brand-teal); box-shadow:0 0 10px var(--brand-teal);" aria-hidden="true"></span>
+                <span class="mono" style="font-size:0.85rem; font-weight:700; color:#FFFFFF;">ROADVISION SIMULATION ENGINE v1.4</span>
+              </div>
+              <span class="badge-status badge-verified">10 SIMULATED MAST NODES</span>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; text-align:left;">
+              <div style="background:rgba(255,255,255,0.03); padding:16px; border-radius:10px; border:1px solid var(--border-subtle);">
+                <div style="font-size:0.75rem; color:var(--text-dim);" class="mono">CORRIDOR COVERAGE</div>
+                <div style="font-size:1.3rem; font-weight:800; color:#FFFFFF; margin-top:4px;">50.0 Km</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.03); padding:16px; border-radius:10px; border:1px solid var(--border-subtle);">
+                <div style="font-size:0.75rem; color:var(--text-dim);" class="mono">SPATIAL PRECISION</div>
+                <div style="font-size:1.3rem; font-weight:800; color:var(--brand-teal); margin-top:4px;">± 0.8m</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.03); padding:16px; border-radius:10px; border:1px solid var(--border-subtle);">
+                <div style="font-size:0.75rem; color:var(--text-dim);" class="mono">DISPATCH TARGET</div>
+                <div style="font-size:1.3rem; font-weight:800; color:#EF4444; margin-top:4px;">&lt; 90s (Goal)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       METHODOLOGY & LEGAL TRANSPARENCY MODAL
+       ========================================================================== -->
+  <div class="modal-backdrop" id="legalModal" role="dialog" aria-modal="true" aria-labelledby="modalHeading">
+    <div class="modal-box">
+      <button class="modal-close-btn" id="btnCloseLegalModal" type="button" aria-label="Close dialog">✕</button>
+
+      <h3 id="modalHeading" style="font-size:1.5rem; margin-bottom:12px;">Methodology &amp; Verification Transparency</h3>
+      
+      <div style="font-size:0.9rem; color:var(--text-muted); line-height:1.65; display:flex; flex-direction:column; gap:16px;">
+        <div style="padding:14px; background:rgba(42,217,198,0.08); border-radius:8px; border:1px solid rgba(42,217,198,0.25);">
+          <strong style="color:var(--brand-teal);">Venture Prototype Status:</strong> RoadPulse is an early-stage student venture prototype developed for entrepreneurship evaluation at VIT-AP University. All dashboards, telemetry streams, and hazard alerts are software simulations. The hardware specifications (M1 Mast and R1 In-Cabin HUD) represent planned reference engineering designs for evaluation; no physical units are commercially deployed.
+        </div>
+
+        <div>
+          <strong style="color:#FFF;">Privacy-by-Design Goals:</strong> Optical telemetry concepts are structured around edge-anonymization principles. Vehicle license plates and facial contours are planned to be irreversibly blurred on-device at the edge layer before any coordinate or incident metadata is transmitted. No raw continuous video feeds are stored or uploaded in the target architecture.
+        </div>
+
+        <div>
+          <strong style="color:#FFF;">Corridor Sizing &amp; Cost Assumptions:</strong> Sizing formulas reflect an illustrative model of 1 camera unit every 5 km (~₹20,000/km/yr) based on planned BOM estimates of ~₹45,000 per mast amortized over 24 months. Highway accident and fatality figures are sourced from the Ministry of Road Transport and Highways (MoRTH) Road Accidents in India 2024 report.
+        </div>
+      </div>
+
+      <div style="margin-top:24px; text-align:right;">
+        <button class="btn btn-secondary btn-sm" id="btnDismissLegalModal" type="button">I Understand</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="brand-logo" style="margin-bottom:16px;">
+            <div class="brand-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2AD9C6" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" stroke-opacity="0.4"/>
+                <circle cx="12" cy="12" r="4"/>
+                <path d="M7 21L11 12H13L17 21" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="brand-title">Road<span>Pulse</span></div>
+          </div>
+          <p style="color:var(--text-muted); max-width:320px; line-height:1.6;">
+            A student venture prototype exploring camera-based road hazard detection with spatial multi-camera corroboration.
+          </p>
+          <div style="margin-top:16px; font-size:0.75rem; color:var(--text-dim);" class="mono">
+            Every road has a pulse. We read it in real time.
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Architecture</h4>
+          <ul class="footer-links">
+            <li><a href="#cockpit">Simulator</a></li>
+            <li><a href="#hardware">M1 Mast</a></li>
+            <li><a href="#cabin-hud">Cabin HUD</a></li>
+            <li><a href="#consensus">Consensus</a></li>
+            <li><a href="#capabilities">Stack</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Corridor &amp; Pricing</h4>
+          <ul class="footer-links">
+            <li><a href="#calculator">Corridor Calculator</a></li>
+            <li><a href="#pricing">Authority License</a></li>
+            <li><a href="#pricing">Fleet HUD</a></li>
+            <li><a href="#pilot">Pilot Form</a></li>
+            <li><a href="#faq">Engineering FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Legal &amp; Integrity</h4>
+          <ul class="footer-links">
+            <li><button type="button" data-open-legal>Validation Methodology</button></li>
+            <li><button type="button" data-open-legal>Privacy-by-Design Goals</button></li>
+            <li><button type="button" data-open-legal>MoRTH 2024 Sources</button></li>
+            <li><a href="../prototype/README.md" title="Prototype workspace view">Full 6-View Prototype ↗</a></li>
+            <li><a href="../../docs/RoadPulse-Venture-Concept.md" title="Venture Pitch & Plan">Venture Pitch &amp; Concept ↗</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Persistent Prototype Transparency Footer Note -->
+      <div style="margin-top:32px; padding:16px 20px; background:rgba(255,255,255,0.02); border:1px solid var(--border-subtle); border-radius:8px; font-size:0.78rem; color:var(--text-dim); text-align:center; line-height:1.5;">
+        <strong style="color:var(--brand-teal);">Concept Prototype Note:</strong> Concept prototype. Dashboards, incidents and alerts on this page are simulated. No live cameras or emergency services are connected.
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © 2026 RoadPulse, a student venture prototype developed at VIT-AP University. All rights reserved.
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="width:7px; height:7px; border-radius:50%; background:var(--brand-teal);" aria-hidden="true"></span>
+          <span class="mono" style="font-size:0.75rem; color:var(--text-muted);">SIMULATED ENVIRONMENT</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modular Application Entry Point -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
