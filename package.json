@@ -5,22 +5,34 @@
   "description": "RoadPulse — Smart Road-Monitoring Camera Network Monorepo",
   "workspaces": [
     "apps/*",
+    "apps/portals/*",
     "packages/*"
   ],
   "scripts": {
     "start": "npm run serve:landing",
     "serve:landing": "npx --yes serve apps/landing -p 3000",
+    "dev:authority": "vite apps/portals/authority-portal --port 3001",
+    "dev:customer": "vite apps/portals/customer-app --port 3002",
+    "build:authority": "vite build apps/portals/authority-portal",
+    "build:customer": "vite build apps/portals/customer-app",
     "lint": "npx --yes eslint \"apps/**/*.js\" \"packages/**/*.js\"",
     "lint:fix": "npx --yes eslint \"apps/**/*.js\" \"packages/**/*.js\" --fix",
-    "format": "npx --yes prettier --write \"apps/**/*.{html,css,js}\" \"packages/**/*.{json,css,js}\" \"docs/**/*.md\" \"*.{md,json}\"",
-    "format:check": "npx --yes prettier --check \"apps/**/*.{html,css,js}\" \"packages/**/*.{json,css,js}\" \"docs/**/*.md\" \"*.{md,json}\"",
+    "format": "npx --yes prettier --write \"apps/**/*.{html,css,js,jsx}\" \"packages/**/*.{json,css,js}\" \"docs/**/*.md\" \"*.{md,json}\"",
+    "format:check": "npx --yes prettier --check \"apps/**/*.{html,css,js,jsx}\" \"packages/**/*.{json,css,js}\" \"docs/**/*.md\" \"*.{md,json}\"",
     "validate": "node scripts/validate-html.js"
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^6.3.0",
     "eslint": "^8.57.0",
-    "prettier": "^3.2.5"
+    "prettier": "^3.2.5",
+    "vite": "^8.3.8"
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "lucide-react": "^1.72.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   }
 }

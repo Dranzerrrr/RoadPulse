@@ -1,7 +1,7 @@
 # RoadPulse Database Security & Row Level Security (RLS) Guide
 
 > **Target Platform:** Supabase (PostgreSQL 15+)  
-> **Security Philosophy:** Defense-in-depth via database kernel policies  
+> **Security Philosophy:** Defense-in-depth via database kernel policies
 
 ---
 
@@ -12,6 +12,7 @@ In the current prototype phase, access requirements are straightforward:
 1. **`pilot_requests` Table:**
    - **Anonymous Visitors (`anon`):** Can `INSERT` new trial requests.
    - **Read Access:** Restricted to authenticated platform administrators. Anonymous users cannot read existing rows.
+
    ```sql
    CREATE POLICY "Allow public insert to pilot_requests"
        ON public.pilot_requests FOR INSERT TO anon
@@ -34,6 +35,7 @@ In the current prototype phase, access requirements are straightforward:
 When the **Authority Monitoring Portal** and **Fleet Operator Portal** are launched, the system will enforce multi-tenant isolation using Supabase Auth and Row Level Security.
 
 ### Planned Roles Hierarchy
+
 - `platform_admin`: Superuser managing system health and cross-corridor provisioning.
 - `authority_admin`: Project Director at NHAI / Concessionaire managing team members and camera licenses.
 - `authority_officer`: Road safety engineer authorized to verify incidents, approve workorders, and trigger dispatches.
@@ -42,6 +44,7 @@ When the **Authority Monitoring Portal** and **Fleet Operator Portal** are launc
 - `driver`: In-cabin vehicle operator receiving heads-up hazard warnings.
 
 ### Multi-Tenant Policy Pattern
+
 Every record in tenant-scoped tables (`incidents`, `workorders`, `cameras`, `fleet_telemetry`) references `organisation_id`.
 
 ```sql
@@ -59,13 +62,14 @@ CREATE POLICY "Tenant isolation for incidents"
     USING (
       organisation_id = auth.get_user_org_id()
       OR EXISTS (
-        SELECT 1 FROM public.profiles 
+        SELECT 1 FROM public.profiles
         WHERE profiles.id = auth.uid() AND profiles.role = 'platform_admin'
       )
     );
 ```
 
 ### Security Guarantees
+
 - No tenant can read or modify another tenant's highway corridor telemetry.
 - Telemetry ingestion from roadside masts validates cryptographic device tokens before inserting rows.
 - Data residency: All records hosted in MeitY-compliant Indian cloud regions (e.g. AWS Mumbai / GCP Delhi).

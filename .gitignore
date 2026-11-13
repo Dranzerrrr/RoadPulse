@@ -14,8 +14,10 @@ coverage/
 .env.test.local
 .env.production.local
 
-# Vercel
+# Vercel & Build outputs
 .vercel
+dist/
+build/
 
 # Logs
 npm-debug.log*

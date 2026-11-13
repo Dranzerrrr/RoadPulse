@@ -19,8 +19,8 @@ if (!fs.existsSync(htmlPath)) {
 const htmlContent = fs.readFileSync(htmlPath, 'utf8');
 console.log(`[VALIDATING] apps/landing/index.html...`);
 
-// 1. Check Doctype
-if (!htmlContent.trim().startsWith('<!DOCTYPE html>')) {
+// 1. Check Doctype (case-insensitive)
+if (!/^<!doctype\s+html>/i.test(htmlContent.trim())) {
   console.error(`  [ERROR] Missing standard <!DOCTYPE html> declaration.`);
   hasErrors = true;
 }
